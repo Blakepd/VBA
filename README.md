@@ -1,5 +1,4 @@
-# VBA
-VBA Repo of Code Modules to help in real world scenarios
+# VBA Repo of Code Modules to help in real world scenarios
 
 Code Modules:
 Excel_OnTime - Application.OnTime is super helpful vba tool to help schedule procedures in the future or rerun procedures based on the given time. 
