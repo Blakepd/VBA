@@ -1,3 +1,6 @@
+' Make sure the following WIN API for Sleep is in one of the modules you use this class with:
+'Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal Milliseconds As LongPtr)
+
 VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
