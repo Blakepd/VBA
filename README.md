@@ -9,7 +9,7 @@ stops your computer from going to sleep. If asleep, both OnTime and SetTimer wil
 
 IE_Automate_Class - Class Module to make ie automation easier. Follow the Class Module notes and see below IE_Mod for example.
 
-IE_Mod - Automating Internet Explorer with the above Class Module. A an example of how to use IE_Automate.
+IE_Mod - Automating Internet Explorer with the above Class Module. An example of how to use IE_Automate with a few other options.
 
 
 More to come soon!
