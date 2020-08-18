@@ -16,5 +16,6 @@ IE_Automate_Class - Class Module to make ie automation easier. Follow the Class 
 
 IE_Mod - Automating Internet Explorer with the above Class Module. Examples of how to use IE_Automate_Class with multiple options.
 
+Remove Special Characters from String - Quick and easy loop to remove special characters from any string.
 
 More to come soon!
