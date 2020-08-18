@@ -1,0 +1,16 @@
+Sub Remove_Special_Characters()
+'Remove Special Characters from String
+Dim z As Long, y As String, sc_Str As String, output As String
+
+sc_Str = "T%^E@*S&#T"
+
+For z = 1 To Len(sc_Str)
+    y = Mid(sc_Str, z, 1) 'Select the character at the i position
+    If (y >= "a" And y <= "z") Or (y >= "0" And y <= "9") Or (y >= "A" And y <= "Z") Then
+        output = output & y
+    Else
+        output = output & ""
+    End If
+Next
+
+End Sub
