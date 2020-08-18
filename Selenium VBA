@@ -1,0 +1,68 @@
+Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal Milliseconds As LongPtr)
+
+Sub Selenium_Proc()
+    
+    Dim sel As selenium.ChromeDriver, ele As Object
+    Dim i As Long, rc As Long
+    
+    ' Address for the Book Page FSC PRD
+    Const URL = "Address"
+  
+    ' Set Selenium ChromeDriver Object
+    Set sel = New selenium.ChromeDriver
+    
+    ' Row count and Begin Timer
+    rc = Acc.Range("A" & Rows.count).End(xlUp).Row
+        
+For i = 5 To rc
+    
+        ' Navigate to BookPage
+        sel.Get BookPage
+    
+         ' Switch to first iframe (Only one in this instance)
+        Set iframe = sel.FindElementByTag("iframe", 10000)
+        sel.SwitchToFrame iframe, 5000
+    
+        ' Click Drop Down
+        Set ele = sel.FindElementById("$ICField7$hviewall$0", 5000)
+        ele.Click
+    
+        ' Input Date
+        Call Sel_Check(sel, "BOOK_WRK_ACCOUNTING_DT", Format(Acc.Range("E1"), "mm/dd/yyyy"))
+
+        ' Input Trans Date
+        Call Sel_Check(sel, "BOOK_WRK_TRANS_DT", dtTrans)
+        
+        ' Input End Date
+        Call Sel_Check(sel, "BOOK_LIFE_END_DT$0", Format(Acc.Range("D" & i), "mm/dd/yyyy"))
+        
+        ' Input End Date
+        Call Sel_Check(sel, "BOOK_LIFE_END_DT$1", Format(Acc.Range("D" & i), "mm/dd/yyyy"))
+        
+        ' Click save
+        Set ele = sel.FindElementById("#ICSave", 5000)
+        ele.Click
+        
+        ' Set Audit End Date (After Save)
+        Set ele = sel.FindElementById("BOOK_LIFE_END_DT$0", 5000)
+            
+Next
+
+End Sub
+
+Sub Sel_Check(chr As Object, ele_id As String, set_val As String)
+    
+    Dim ele As Object, c As Long
+    
+    ' Loop through until we get our final result
+    Do
+        Set ele = chr.FindElementById(ele_id, 5000)
+        ele.Clear
+        ele.SendKeys set_val
+        c = c + 1
+        If c > 20 Then Exit Sub
+        Sleep 200
+    Loop Until ele.Value = set_val
+
+End Sub
+
