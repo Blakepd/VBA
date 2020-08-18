@@ -20,4 +20,6 @@ IE_Mod - Automating Internet Explorer with the above Class Module. Examples of h
 
 Remove Special Characters from String - Quick and easy loop to remove special characters from any string.
 
+Selenium VBA - Popular Python repository selenium now compatible with VBA. A quick example of how to use Selenium in VBA. Note you will need to download Selenium for VBA from the original repository, this is just another example of how to use it. Also, the repo is not up to date so if you use Python Selenium you will see a few features are not available as VBA selenium is out dated, but it still works nice.
+
 More to come soon!
