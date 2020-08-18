@@ -4,6 +4,8 @@
 
 Advanced_Filtering - Fast way in excel to filter data in place or filter and move data. If you filter data a lot and want a faster way to filter with formulas or more criteria then filter in place will help. If you need to move unfiltered raw data to another workbook or sheet this is the best method, no looping or bringing data into an array to filter. 
 
+Basic_IE_Automate - Basic way to use Internet Explorer Automation with a few advanced procedures. Shows how to navigate to ie webpage and interact, such as click, change value or text. 
+
 Excel_OnTime - Application.OnTime is super helpful vba tool to help schedule procedures in the future or rerun procedures based on the given time. 
 If you have a task that needs to be run at a certain time each day this can be really helpful. 
 
