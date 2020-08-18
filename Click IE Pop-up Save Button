@@ -1,0 +1,117 @@
+Sub IE_Download_File()
+
+Dim wb As Workbook
+
+' Set ie - late binding and set ie to visible
+Set ie = CreateObject("InternetExplorer.Application")
+ie.visible = true
+
+ie.Navigate url
+While ie.ReadyState <> 4: DoEvents: Wend
+
+' In this instance I am downloading a query with prompts available
+ie.Document.getElementByID("BIND1").Value = Range("B3")
+ie.Document.getElementByID("BIND2").Value = Range("B4")
+ie.Document.getElementByID("BIND3").Value = Range("B5")
+ie.Document.getElementByID("Download").Click ' Click Download
+While ie.ReadyState <> 3: DoEvents: Wend ' Wait for file to complete downloading
+
+' See bekow procedure - Clicks save on ie pop-up window
+UI_Automate (ie)
+
+' Close internet explorer
+ie.Quit
+Sleep (500)
+
+' Open downloaded file from ie - See below function
+Set wb = Workbooks.Open(Open_Downloaded_File("")) ' If you know part of filename input "name" and it will become *name*
+   
+'*Continue with Code... 
+  
+End Sub
+
+
+Private Sub UI_Automate(ie As Object)
+'This Subroutine will click the save button in ie when we load a query
+
+Dim count As Integer
+Dim o As IUIAutomation, h As Long
+Dim e As IUIAutomationElement
+Dim iCnd As IUIAutomationCondition
+Dim Button As IUIAutomationElement
+Dim InvokePattern As IUIAutomationInvokePattern
+
+While ie.ReadyState <> 3: DoEvents: Wend
+
+tryagain:
+    Sleep (250)
+    count = 0
+    Set o = New CUIAutomation
+    h = ie.hwnd 'Clng(ie.hWnd)
+    h = FindWindowEx(h, 0, "Frame Notification Bar", vbNullString)
+    If h = 0 Then
+        GoTo tryagain
+        count = count + 1
+        If count > 5 Then Exit Sub
+    End If
+    
+    Sleep (250)
+    Set e = o.ElementFromHandle(ByVal h)
+    Set iCnd = o.CreatePropertyCondition(UIA_NamePropertyId, "Save")
+    Set Button = e.FindFirst(TreeScope_Subtree, iCnd)
+    Set InvokePattern = Button.GetCurrentPattern(UIA_InvokePatternId)
+    InvokePattern.Invoke
+    Sleep (500)
+
+End Sub
+
+Private Function Open_Downloaded_File(dnfile As String)
+' This Function will loop through users downloads and locate needed file
+
+Dim LMD As String, filedl As String, LHM As String
+Dim ie As Object, LatestFile As String
+Dim newPath As String, count As Integer
+Dim down_fp As String, LatestDate As String
+Dim wsp As Worksheet, opID As String, LatestTime As String
+
+opID = Environ("username")
+down_fp = "C:\Users\" & opID & "\Downloads"
+
+count = 0
+tryagain_2:
+    filedl = Dir(down_fp & "\*" & dnfile & "*")
+    Do While Len(filedl) > 0
+        LMD = Format(FileDateTime(down_fp & "\" & filedl), "MM/DD/YYYY")
+        LHM = Format(FileDateTime(down_fp & "\" & filedl), "HH:MM:SS")
+        If LMD = Format(Now, "MM/DD/YYYY") Then
+            If LMD >= LatestDate Then
+                If LHM > LatestTime Then
+                    LatestFile = filedl
+                    LatestDate = LMD
+                    LatestTime = LHM
+                End If
+            End If
+        End If
+        filedl = Dir
+    Loop
+
+    If LatestFile = "" Then
+        Sleep (250)
+        If count > 8 Then
+            MsgBox "Error in finding downloaded file, please try again.", vbCritical
+            Exit Function
+        End If
+        count = count + 1
+        Sleep (500)
+        GoTo tryagain_2
+    End If
+
+    newPath = down_fp & "\" & LatestFile
+    file_Download = newPath
+    
+Open_Downloaded_File = newPath
+
+
+End Function
+
+
