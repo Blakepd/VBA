@@ -5,19 +5,19 @@ Sub Selenium_Proc()
     Dim sel As selenium.ChromeDriver, ele As Object
     Dim i As Long, rc As Long
     
-    ' Address for the Book Page FSC PRD
+    ' URL Address
     Const URL = "Address"
   
     ' Set Selenium ChromeDriver Object
     Set sel = New selenium.ChromeDriver
     
     ' Row count and Begin Timer
-    rc = Acc.Range("A" & Rows.count).End(xlUp).Row
+    rc = Range("A" & Rows.count).End(xlUp).Row
         
 For i = 5 To rc
     
-        ' Navigate to BookPage
-        sel.Get BookPage
+        ' Navigate to Url
+        sel.Get URL
     
          ' Switch to first iframe (Only one in this instance)
         Set iframe = sel.FindElementByTag("iframe", 10000)
@@ -28,23 +28,20 @@ For i = 5 To rc
         ele.Click
     
         ' Input Date
-        Call Sel_Check(sel, "BOOK_WRK_ACCOUNTING_DT", Format(Acc.Range("E1"), "mm/dd/yyyy"))
+        Call Sel_Check(sel, "BOOK_WRK_ACCOUNTING_DT", Format(Range("E1"), "mm/dd/yyyy"))
 
         ' Input Trans Date
-        Call Sel_Check(sel, "BOOK_WRK_TRANS_DT", dtTrans)
+        Call Sel_Check(sel, "BOOK_WRK_TRANS_DT", Format(Range("C1"), "mm/dd/yyyy"))
         
         ' Input End Date
-        Call Sel_Check(sel, "BOOK_LIFE_END_DT$0", Format(Acc.Range("D" & i), "mm/dd/yyyy"))
+        Call Sel_Check(sel, "BOOK_LIFE_END_DT$0", Format(Range("D" & i), "mm/dd/yyyy"))
         
         ' Input End Date
-        Call Sel_Check(sel, "BOOK_LIFE_END_DT$1", Format(Acc.Range("D" & i), "mm/dd/yyyy"))
+        Call Sel_Check(sel, "BOOK_LIFE_END_DT$1", Format(Range("D" & i), "mm/dd/yyyy"))
         
         ' Click save
         Set ele = sel.FindElementById("#ICSave", 5000)
         ele.Click
-        
-        ' Set Audit End Date (After Save)
-        Set ele = sel.FindElementById("BOOK_LIFE_END_DT$0", 5000)
             
 Next
 
