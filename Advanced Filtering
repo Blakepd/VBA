@@ -1,0 +1,33 @@
+Sub Advanced_Filtering()
+
+' Set variables
+Dim rc As Long, crc As Long, trc As Long 
+
+' Showalldata can occasionally error - don't want error message
+On Error Resume Next
+
+' Need to show all data and unfilter any previous filters (Filter In Place)
+Sheet1.ShowAllData
+
+' Set rowcounts (rc for dataset and crc/trc for criteria range)
+rc = Sheet1.Range("A" & Rows.Count).End(xlUp).Row: crc = Sheet1.Range("G7").End(xlUp).Row ' Criteria is above dataset (Dataset columns start at row 8)
+
+' Determine the rowcount for criteria, Advanced Filtering can have multiple filters per column. You can add more if needed.
+trc = Sheet1.Range("H7").End(xlUp).Row: If trc > crc Then crc = trc
+trc = Sheet1.Range("I7").End(xlUp).Row: If trc > crc Then crc = trc
+trc = Sheet1.Range("J7").End(xlUp).Row: If trc > crc Then crc = trc
+
+' Advanced Filter Option 1 - Filter In Place
+Sheet1.Range("A8:V" & rc).AdvancedFilter Action:=xlFilterInPlace, CriteriaRange:=Sheet1.Range("G2:J" & crc)
+
+' Advanced Filter Option 2 - Copy Filter To New Location 
+Sheet1.Range("A8:V" & rc).AdvancedFilter Action:=xlFilterCopy, CriteriaRange:=Sheet1.Range("G2:J" & crc), CopyToRange:=Sheet2.Range("A11"), Unique:=False
+
+End Sub
+
+' Add this to worksheet object if you want to auto update Advanced_Filtering
+Private Sub Worksheet_Change(ByVal Target As Range)
+    If Not Intersect(Target, Range("G3:J7")) Is Nothing Then
+      Call Advanced_Filtering
+    End If
+End Sub
