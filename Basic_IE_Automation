@@ -1,0 +1,73 @@
+Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal Milliseconds As LongPtr)
+
+Sub Internet_Explorer_Basics()
+
+Dim ie As Object
+
+Const URL = "https://www.google.com/"
+
+' Late binding on internet explorer object
+Set ie = CreateObject("InternetExplorer.Application")
+
+' Setting ie to visible, this will make ie visible
+ie.Visible = True
+
+' Navigate to web address
+ie.navigate URL
+
+' Wait for page to load, choose one per process
+While ie.ReadyState <> 4: DoEvents ' Page loading - Use this mainly
+While ie.ReadyState <> 3: DoEvents ' Document downloading
+
+' Click on button
+ie.document.getElementById("ID").Click
+
+' Change Value
+ie.document.getElementById("ID").Value = "New Value"
+
+' Using ClassName: 0 = first class in line, 1 = second class in line etc.
+ie.document.getElementByClassName("Class")(0).Click
+
+' Changing Text - Or innerHTML
+ie.document.getElementById("ID").innerText = "New Text"
+
+' Assign value or text to string variable
+Dim test_String As String
+test_String = ie.document.getElementById("ID").Value
+test_String = ie.document.getElementById("ID").innerText
+
+' If you have iframe on page - Situational
+With ie.document.getElementsByTagName("iframe")(0).contentdocument
+'Example
+.getElementById("ID").Value = "New Value"
+End With
+
+' Switch to new ie tab - if you click a link that goes to a new ie tab
+With CreateObject("Shell.Application").Windows
+    Set ie = .Item(.Count - 1)
+End With
+
+' Waiting can be important, sometimes giving the page a little break or letting something load
+Sleep 1000
+
+' If no ID or Class is available then we can loop through each of the pages tags attribute (in this case and image (src))
+' This is just one example of the many things you can do with this
+Dim i_tag As Object, inp As Object
+Set i_tag = ie.document.getElementsByTagName("img")
+For Each inp In inputz
+    If inp.getAttribute("src") = "t/fdgh/s.gif" Then
+    inp.Click: Exit For
+    End If
+Next
+
+' Another popular time saver is to set an object var = ie.document so you don't have to type it over and over
+Dim obj As Object
+Set obj = ie.document
+obj.getElementById("ID").Value = "New Value"
+
+' A Better way is:
+With ie.document
+.getElementById("ID").Value = "New Value"
+End With
+
+End Sub
