@@ -1,3 +1,5 @@
+'This is a Class Module
+
 ' Make sure the following WIN API for Sleep is in one of the modules you use this class with:
 'Public Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal Milliseconds As LongPtr)
 
