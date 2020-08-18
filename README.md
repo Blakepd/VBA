@@ -6,6 +6,8 @@ Advanced_Filtering - Fast way in excel to filter data in place or filter and mov
 
 Basic_IE_Automate - Basic way to use Internet Explorer Automation with a few advanced procedures. Shows how to navigate to ie webpage and interact, such as click, change value or text. 
 
+Click IE Pop-up Save Button - If you ever need to download a file in IE, you'll run into the ie save pop-up. The easy route is Sendkeys but... here is the way to actually click the save button, along with a function to open the file in your downloads.
+
 Excel_OnTime - Application.OnTime is super helpful vba tool to help schedule procedures in the future or rerun procedures based on the given time. 
 If you have a task that needs to be run at a certain time each day this can be really helpful. 
 
