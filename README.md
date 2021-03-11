@@ -19,7 +19,6 @@ Remove Special Characters from String - Quick and easy loop to remove special ch
 
 Selenium VBA - Popular Python repository selenium now compatible with VBA. A quick example of how to use Selenium in VBA. Note you will need to download Selenium for VBA from the original repository, this is just another example of how to use it. Also, the repo is not up to date so if you use Python Selenium you will see a few features are not available as VBA selenium is out dated, but it still works nice.
 
-Windows_SetTimer - A Windows API to the SetTimer function which is similar to vba's Application.OnTime. Also included is SetThreadExecutionState which 
-stops your computer from going to sleep. If asleep, both OnTime and SetTimer will not function properly any longer. 
+Windows_SetTimer - A Windows API to the SetTimer function which is similar to vba's Application.OnTime. If asleep, both OnTime and SetTimer will not function properly. 
 
 More to come soon!
